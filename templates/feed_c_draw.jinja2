@@ -1,0 +1,8 @@
+<div class="feed-content-draw">
+    {% set draw = feed['modules']['module_dynamic']['major']['draw'] %}
+    {% for picture in draw['items'] %}
+        <div>
+            <img src="{{ picture['src'] }}"/>
+        </div>
+    {% endfor %}
+</div>

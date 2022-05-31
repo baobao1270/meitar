@@ -1,0 +1,12 @@
+<div class="feed-content-music">
+    {% set audio = feed['modules']['module_dynamic']['major']['music'] %}
+    <div class="feed-content-music-grid-left">
+        <img src="{{ audio['cover'] }}">
+    </div>
+    <div class="feed-content-music-grid-right">
+        <h3>🎧 <a target="_blank" href="https://www.bilibili.com/audio/au{{ audio['id'] }}">
+            {{ audio['title'] }}</a></h3>
+        <p>{{ audio['label'] }}</p>
+        <p></p>
+    </div>
+</div>

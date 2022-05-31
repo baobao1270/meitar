@@ -1,0 +1,16 @@
+<div class="feed-content-av">
+    {% set video = feed['modules']['module_dynamic']['major']['archive'] %}
+    <div class="feed-content-av-grid-left">
+        <img src="{{ video['cover'] }}">
+        {% if video['badge'] %}
+            <label style="background: {{ video['badge']['bg_color'] }};color: {{ video['badge']['color'] }};">
+                {{ video['badge']['text'] }}
+            </label>
+        {% endif %}
+    </div>
+    <div class="feed-content-av-grid-right">
+        <h3>📺 <a target="_blank" href="https://b23.tv/av{{ video['aid'] }}">
+            {{ video['title'] }}</a></h3>
+        <p>{{ video['desc'] | lf2br }}</p>
+    </div>
+</div>

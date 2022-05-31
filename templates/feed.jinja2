@@ -1,0 +1,75 @@
+{% macro feed_container(feed) -%}
+<article class="feed">
+    <div class="feed-author">
+        <img alt="avatar" src="{{ feed['modules']['module_author']['face'] }}"/>
+        <span>
+            <a href="http://space.bilibili.com/{{ feed['modules']['module_author']['mid'] }}" target="_blank">
+                {{ feed['modules']['module_author']['name'] }}
+            </a>
+        </span>
+    </div>
+    <div class="feed-metadata">
+        <span>
+            {{ feed['modules']['module_author']['pub_ts'] | datetime_format }} UTC /
+            {{ feed['modules']['module_author']['pub_ts'] | datetime_format(offset_hours=8) }} CST /
+            {{ feed['type'] }}
+        </span>
+        <span>
+            <a href="https://t.bilibili.com/{{ feed['id_str'] }}" target="_blank">#{{ feed['id_str'] }}</a>
+        </span>
+    </div>
+    <div class="feed-text">
+        {% if feed['modules']['module_dynamic']['topic']%}
+            <p><a href="https://www.bilibili.com/v/topic/detail?topic_id={{ feed['modules']['module_dynamic']['topic']['id'] }}" target="_blank">
+                [新版话题] #{{ feed['modules']['module_dynamic']['topic']['name'] }}</a>
+            </p>
+        {% endif %}
+        <p>
+        {% if feed['modules']['module_dynamic']['desc'] %}
+            {% for rt_node in feed['modules']['module_dynamic']['desc']['rich_text_nodes'] %}
+                {% if rt_node['type'] == 'RICH_TEXT_NODE_TYPE_AT' %}
+                    <a target="_blank" href="https://space.bilibili.com/{{ rt_node['rid'] }}">{{ rt_node['orig_text'] }}</a>
+                {% elif rt_node['type'] == 'RICH_TEXT_NODE_TYPE_TOPIC' %}
+                    <a target="_blank" href="https://t.bilibili.com/topic/name/{{ rt_node['text'] | strip_hashtag }}">{{ rt_node['orig_text'] }}</a>
+                {% elif rt_node['type'] == 'RICH_TEXT_NODE_TYPE_LOTTERY' %}
+                    <a href="#" title="暂不支持互动抽奖 请前往B站官方抽奖">🎁 互动抽奖</a>
+                {% elif rt_node['type'] == 'RICH_TEXT_NODE_TYPE_BV' %}
+                    <a href="https://b23.tv/{{ rt_node['orig_text'] }}">▶ {{ rt_node['orig_text'] }} | {{ rt_node['text'] }}</a>
+                {% else %}
+                    {{ rt_node['orig_text'] | lf2br }}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </p>
+    </div>
+    <div class="feed-content">
+        {% if feed['type'] == 'DYNAMIC_TYPE_AV' %}
+            {% include 'feed_c_av.jinja2' %}
+        {% elif feed['type'] == 'DYNAMIC_TYPE_MUSIC' %}
+            {% include 'feed_c_music.jinja2' %}
+        {% elif feed['type'] == 'DYNAMIC_TYPE_ARTICLE' %}
+            {% include 'feed_c_article.jinja2' %}
+        {% elif feed['type'] == 'DYNAMIC_TYPE_DRAW' %}
+            {% include 'feed_c_draw.jinja2' %}
+        {% elif feed['type'] == 'DYNAMIC_TYPE_WORD' %}
+            {# do nothing #}
+        {% elif feed['type'] == 'DYNAMIC_TYPE_FORWARD' %}
+            {# do nothing #}
+        {% elif feed['type'] == 'DYNAMIC_TYPE_LIVE_RCMD' %}
+            <i style="color: #66ccff">该 UP 主开始了直播。由于我平时不看直播所以懒得写渲染直播卡片的代码。<br>您可以点击 UP 主昵称进入他的空间查看他的直播间。</i>
+        {% else %}
+            <p style="font-size: .75rem; color: #ee0000">不支持的动态类型（<code>{{ feed['type'] }}</code>），可能无法正确显示。
+                请点击右上角动态 ID（带 # 号的数字）查看原始信息。</p>
+        {% endif %}
+    </div>
+    <blockquote>
+        {% if feed['orig'] %}
+            {% if feed['orig']['type'] == 'DYNAMIC_TYPE_NONE' %}
+                <p style="font-size: .75rem;background: #f0f0f0;padding: 1em 2em;color: #303030;">原动态已被删除</p>
+            {% else %}
+                {{ feed_container(feed['orig']) }}
+            {% endif %}
+        {% endif %}
+    </blockquote>
+</article>
+{%- endmacro %}
