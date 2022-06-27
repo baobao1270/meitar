@@ -1,7 +1,7 @@
 {% macro feed_container(feed) -%}
 <article class="feed">
     <div class="feed-author">
-        <img alt="avatar" src="{{ feed['modules']['module_author']['face'] }}"/>
+        <img alt="avatar" src="{{ feed['modules']['module_author']['face'] }}" referrerpolicy="no-referrer">
         <span>
             <a href="http://space.bilibili.com/{{ feed['modules']['module_author']['mid'] }}" target="_blank">
                 {{ feed['modules']['module_author']['name'] }}

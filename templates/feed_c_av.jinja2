@@ -1,7 +1,7 @@
 <div class="feed-content-av">
     {% set video = feed['modules']['module_dynamic']['major']['archive'] %}
     <div class="feed-content-av-grid-left">
-        <img src="{{ video['cover'] }}">
+        <img src="{{ video['cover'] }}" referrerpolicy="no-referrer">
         {% if video['badge'] %}
             <label style="background: {{ video['badge']['bg_color'] }};color: {{ video['badge']['color'] }};">
                 {{ video['badge']['text'] }}

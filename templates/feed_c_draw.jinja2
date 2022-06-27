@@ -2,7 +2,7 @@
     {% set draw = feed['modules']['module_dynamic']['major']['draw'] %}
     {% for picture in draw['items'] %}
         <div>
-            <img src="{{ picture['src'] }}"/>
+            <img src="{{ picture['src'] }}" referrerpolicy="no-referrer">
         </div>
     {% endfor %}
 </div>
