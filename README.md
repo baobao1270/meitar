@@ -10,9 +10,9 @@ Meitar 的名字来自于 VC 圈著名爬爬怪 [御坂美团](https://space.bil
 在 Chrome 浏览器中，安装 [Get Cookies](https://chrome.google.com/webstore/detail/get-cookiestxt/bgaddhkoddajcdgocldbbfleckgcbcid)
 插件，在您登录 BiliBili 账号的情况下获取其 Cookies，并保存到程序相同目录。然后，运行如下命令： 
 ```
-pip install -r requirements.txt
 python -m venv venv
 venv\Scripts\activate
+pip install -r requirements.txt
 spider.py    # 抓取指定时间范围并保存为 JSON
 stat.py      # 描述性统计（？）
 generate.py  # 生成静态 HTML 文件
